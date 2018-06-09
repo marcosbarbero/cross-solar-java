@@ -1,0 +1,48 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="marcos" id="1001122005_create_table_daily_electricity">
+        <createTable tableName="daily_electricity">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pk_daily_electricity"/>
+            </column>
+            <column name="panel_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_daily_panel_id"
+                             references="panel(id)"
+                />
+            </column>
+            <column name="generated_electricity_sum" type="BIGINT"/>
+            <column name="generated_electricity_min" type="BIGINT"/>
+            <column name="generated_electricity_max" type="BIGINT"/>
+            <column name="generated_electricity_average" type="DOUBLE"/>
+            <column name="reading_at" type="datetime"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="marcos" id="1001122005_add_hourly_electricity_foreign_key_constraint">
+        <addForeignKeyConstraint baseColumnNames="panel_id"
+                                 baseTableName="hourly_electricity"
+                                 constraintName="fk_hourly_panel_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="panel"/>
+    </changeSet>
+
+    <changeSet dbms="mysql" author="marcos" id="1001122006_alter_table_panel_chance_longitude_latitude">
+        <modifyDataType columnName="longitude"
+                        newDataType="DOUBLE(8,4)"
+                        tableName="panel" />
+
+        <modifyDataType columnName="latitude"
+                        newDataType="DOUBLE(8,4)"
+                        tableName="panel" />
+
+        <modifyDataType columnName="serial"
+                        newDataType="VARCHAR(16)"
+                        tableName="panel" />
+
+        <addUniqueConstraint columnNames="serial"
+                             constraintName="uq_serial"
+                             tableName="panel" />
+    </changeSet>
+
+</databaseChangeLog>

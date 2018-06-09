@@ -1,14 +1,11 @@
 package com.crossover.techtrial.model;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Panel class hold information related to a Solar panel.
@@ -22,23 +19,31 @@ public class Panel implements Serializable {
 
   private static final long serialVersionUID = -8527695980909864257L;
 
+  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id;
+  private Long id;
 
   @NotNull
-  @Column(name = "serial")
-  String serial;
+  @Column(name = "serial", unique = true)
+  private String serial;
 
   @Column(name = "longitude")
-  Double longitude;
+  private Double longitude;
 
   @Column(name = "latitude")
-  Double latitude;
+  private Double latitude;
 
   @Nullable
   @Column(name = "brand")
-  String brand;
+  private String brand;
+
+  public Panel() {
+  }
+
+  public Panel(Long id) {
+    this.id = id;
+  }
 
   public Long getId() {
     return id;

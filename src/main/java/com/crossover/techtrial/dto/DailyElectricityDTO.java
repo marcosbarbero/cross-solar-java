@@ -1,17 +1,22 @@
 package com.crossover.techtrial.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * DailyElectricity class will hold sum, average,minimum and maximum electricity for a given day.
- * @author Crossover
+ * DailyElectricityDTO class will hold sum, average,minimum and maximum electricity for a given day.
  *
+ * @author Crossover
+ * @author Marcos Barbero
  */
-
-public class DailyElectricity implements Serializable {
+public class DailyElectricityDTO implements Serializable {
   
   private static final long serialVersionUID = 3605549122072628877L;
+
+  @JsonIgnore
+  private Long panelId;
 
   private LocalDate date;
   
@@ -22,6 +27,30 @@ public class DailyElectricity implements Serializable {
   private Long min;
   
   private Long max;
+
+  public DailyElectricityDTO(LocalDate date, Long sum, Long average, Long min, Long max) {
+    this.date = date;
+    this.sum = sum;
+    this.average = average;
+    this.min = min;
+    this.max = max;
+  }
+
+  public DailyElectricityDTO(Long panelId, LocalDate date, Long sum, Long average, Long min, Long max) {
+    this(date, sum, average, min, max);
+    this.panelId = panelId;
+  }
+
+  public DailyElectricityDTO() {
+  }
+
+  public Long getPanelId() {
+    return panelId;
+  }
+
+  public void setPanelId(Long panelId) {
+    this.panelId = panelId;
+  }
 
   public LocalDate getDate() {
     return date;
@@ -65,7 +94,7 @@ public class DailyElectricity implements Serializable {
 
   @Override
   public String toString() {
-    return "DailyElectricity [date=" + date + ", sum=" + sum + ", average="
+    return "DailyElectricityDTO [date=" + date + ", sum=" + sum + ", average="
         + average + ", min=" + min + ", max=" + max + "]";
   }
 

@@ -2,8 +2,12 @@ package com.crossover.techtrial.service;
 
 import com.crossover.techtrial.model.Panel;
 import com.crossover.techtrial.repository.PanelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.crossover.techtrial.service.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static java.lang.String.format;
 
 
 /**
@@ -14,19 +18,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class PanelServiceImpl implements PanelService {
 
-  @Autowired
-  PanelRepository panelRepository;
-  
+  private final PanelRepository panelRepository;
+
+  public PanelServiceImpl(final PanelRepository panelRepository) {
+    this.panelRepository = panelRepository;
+  }
+
   /* (non-Javadoc)
    * @see com.crossover.techtrial.service.PanelService#register(com.crossover.techtrial.model.Panel)
    */
   
   @Override
-  public void register(Panel panel) { 
-    panelRepository.save(panel);
+  public Panel register(Panel panel) {
+    return panelRepository.save(panel);
   }
-  
-  public Panel findBySerial(String serial) {
-    return panelRepository.findBySerial(serial);
+
+  @Override
+  public Panel getBySerial(String serial) {
+    Panel panel = panelRepository.findBySerial(serial);
+    if (panel == null) {
+      throw new ResourceNotFoundException(format("Panel '%s' was not found", serial));
+    }
+
+    return panel;
+  }
+
+  @Override
+  public List<Panel> getAll() {
+    return this.panelRepository.findAll();
   }
 }

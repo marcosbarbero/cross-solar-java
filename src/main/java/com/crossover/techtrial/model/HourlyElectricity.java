@@ -28,18 +28,18 @@ public class HourlyElectricity implements Serializable {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id;
+  private Long id;
   
   @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "panel_id", referencedColumnName = "id")
-  Panel panel;
+  private Panel panel;
   
   @Column(name = "generated_electricity")
-  Long generatedElectricity;
+  private Long generatedElectricity;
   
   @Column(name = "reading_at")
-  LocalDateTime readingAt;
+  private LocalDateTime readingAt;
 
   public Long getId() {
     return id;
