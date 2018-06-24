@@ -37,7 +37,7 @@ Tasks:
     * CrossSolar application uses liquibase for Database changes. In case you need to update Database, please create 
       a new changeset file in resources/db.changelog folder and include the newly created file in 
       `db.changelog-master.xml`. For more details on liquibase follow 
-      [liquibase docs]()https://www.liquibase.org/documentation/changeset.html) 
+      [liquibase docs](https://www.liquibase.org/documentation/changeset.html) 
   
    * CrossSolar Application:
      * To start the application run CrossSolarApplication.java main method from your IDE
